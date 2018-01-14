@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Card, Icon, Popup, Divider } from 'semantic-ui-react'
-import { Redirect } from 'react-router'
 import firebase from '../Firebase'
+import { Link } from 'react-router-dom'
 
 var sectionStyle = {
     paddingTop: '5em',
@@ -69,7 +69,7 @@ export default class Contact extends Component {
       phone: '',
       message: '',
       items: [],
-      fireRedirect: false
+      hasBeenClicked: false
     }
     this.change = this.change.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -98,7 +98,7 @@ export default class Contact extends Component {
         email: '',
         phone: '',
         message: '',
-        fireRedirect: true
+        hasBeenClicked: true
       });
     };
 
@@ -127,7 +127,7 @@ componentDidMount() {
 
 
   render() {
-        const { fireRedirect } = this.state
+        const { hasBeenClicked } = this.state
 
     return (
       <div style={ sectionStyle }>
@@ -247,9 +247,18 @@ componentDidMount() {
                   
                   <Button type='submit' onClick={e => this.onSubmit(e)}>Submit</Button>
                 </Form>
-                {fireRedirect && (
-                  <Redirect to = {'/ThankYou'}
-                  />
+                {hasBeenClicked && (
+                 <div> 
+                  <div>
+                    Thank You for contacting me.
+                  </div>
+                  <div>
+                    I will get back to use as soon as poosible.
+                  </div>
+                  <div>
+                    Please check out my <Link to='/portfolio'>Portfolio Showcase</Link>!
+                  </div>
+                 </div>
                 )}
                 </Card>
             </Grid.Column>
@@ -259,21 +268,7 @@ componentDidMount() {
           </Grid.Row>
           </Grid>
 
-          <div>
-            <Card>
-              <ul>
-                {this.state.items.map((item) => {
-                  return (
-                    <li key={item.id}>
-                      <p>Email: {item.email}&nbsp;
-                      Phone: {item.phone}&nbsp;
-                      Message: {item.message}&nbsp;</p>
-                    </li>
-                  )
-                })}
-              </ul>
-            </Card>
-          </div>
+
 
       </div>
 
